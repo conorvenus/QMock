@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import Button from "./Button";
 
 export type Option = {
     id: number,
@@ -27,7 +28,7 @@ export default function OptionSelector({ options, selectedOption, setSelectedOpt
     return (
         <div className="grid grid-cols-2 gap-4">
             {shuffledOptions.current.map(option => (
-                <button key={option.id} onClick={() => selectOption(option)} className={`rounded-xl p-4 font-medium text-lg border border-qm-500 ${selectedOption?.id !== option.id ? "bg-qm-200 text-qm-700" : "bg-qm-700 border-qm-700 text-qm-200"}`}>{option.text}</button>
+                <Button key={option.id} text={option.text} variant={selectedOption?.id === option.id ? "selected option" : "option"} onClick={() => selectOption(option)} />
             ))}
         </div>
     )

@@ -1,6 +1,6 @@
-import { MatchingPairsQuestion } from "../../../shared/validators/questions/MatchingPairsValidator";
+import { MatchingPairsQuestion } from "../../../../shared/validators/questions/MatchingPairsValidator";
 import { useState } from "react";
-import QuestionHeader from "./QuestionHeader";
+import QuestionHeader from "../QuestionHeader";
 
 export default function MatchingPairs({ question, questionNumber, numberOfQuestions, onSubmit }: {
     question: MatchingPairsQuestion,

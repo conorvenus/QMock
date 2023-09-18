@@ -1,6 +1,7 @@
-import { MultipleChoiceQuestion } from "../../../shared/validators/questions/MultipleChoiceValidator";
+import { MultipleChoiceQuestion } from "../../../../shared/validators/questions/MultipleChoiceValidator";
 import { useState, useRef } from "react";
-import QuestionHeader from "./QuestionHeader";
+import QuestionHeader from "../QuestionHeader";
+import Button from "../Button";
 
 export default function MultipleChoice({ question, questionNumber, numberOfQuestions, onSubmit }: {
     question: MultipleChoiceQuestion,
@@ -30,7 +31,7 @@ export default function MultipleChoice({ question, questionNumber, numberOfQuest
                     ))}
                 </div>
             </div>
-            <button className="border-qm-700 px-4 py-2 border rounded-xl text-lg font-bold" onClick={() => selectedIdx !== -1 && onSubmit(question.correctAnswer === choices.current[selectedIdx])}>Submit</button>
+            <Button text="Submit" variant="secondary" onClick={() => selectedIdx !== -1 && onSubmit(question.correctAnswer === choices.current[selectedIdx])} />
         </div>
     )
 }

@@ -1,6 +1,7 @@
-import { TrueFalseQuestion } from "../../../shared/validators/questions/TrueFalseValidator";
+import { TrueFalseQuestion } from "../../../../shared/validators/questions/TrueFalseValidator";
 import { useState, useRef } from "react";
-import QuestionHeader from "./QuestionHeader";
+import QuestionHeader from "../QuestionHeader";
+import Button from "../Button";
 
 export default function TrueFalse({ question, questionNumber, numberOfQuestions, onSubmit }: {
     question: TrueFalseQuestion,
@@ -30,7 +31,7 @@ export default function TrueFalse({ question, questionNumber, numberOfQuestions,
                     ))}
                 </div>
             </div>
-            <button className="border-qm-700 px-4 py-2 border rounded-xl text-lg font-bold" onClick={() => selectedIdx !== -1 && onSubmit(selectedIdx === (isTrueStatement.current ? 0 : 1))}>Submit</button>
+            <Button text="Submit" variant="primary" onClick={() => selectedIdx !== -1 && onSubmit(selectedIdx === (isTrueStatement.current ? 0 : 1))} />
         </div>
     )
 }

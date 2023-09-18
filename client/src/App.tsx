@@ -35,7 +35,7 @@ function App() {
     return (
         <>
             <div className="flex flex-row gap-8 m-8 mt-0 pt-8">
-                <button onClick={() => getQuestionsByTopic({ topic: "Test Topic", summary: "test topic", quantity: 5 })}>Get Questions</button>
+                <button onClick={() => getQuestionsByTopic({ topic: "Test Topic", summary: "test topic", quantity: 1, type: "true/false" })}>Get Questions</button>
                 <button onClick={() => setQuestions([])}>Clear Questions</button>
             </div>
             <div className="flex flex-col flex-align-center gap-8 m-8 items-start">

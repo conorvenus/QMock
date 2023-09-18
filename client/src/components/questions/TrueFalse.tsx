@@ -2,6 +2,7 @@ import { TrueFalseQuestion } from "../../../../shared/validators/questions/TrueF
 import { useState, useRef } from "react";
 import QuestionHeader from "../QuestionHeader";
 import Button from "../Button";
+import OptionSelector, { Option } from "../OptionSelector";
 
 export default function TrueFalse({ question, questionNumber, numberOfQuestions, onSubmit }: {
     question: TrueFalseQuestion,
@@ -9,29 +10,17 @@ export default function TrueFalse({ question, questionNumber, numberOfQuestions,
     numberOfQuestions: number,
     onSubmit: (correct: boolean) => void
 }) {
-
-    const [selectedIdx, setSelectedIdx] = useState<number>(-1);
+    const options = [{ id: 0, text: "True" }, { id: 1, text: "False" }];
+    const [selectedOption, setSelectedOption] = useState<Option | null>(null);
     const isTrueStatement = useRef(Math.random() > 0.5 ? true : false);
-
-    function setSelectedIndex(idx: number) {
-        if (selectedIdx === idx) {
-            setSelectedIdx(-1);
-            return;
-        }
-        setSelectedIdx(idx);
-    }
 
     return (
         <div className="flex flex-col items-center gap-4"> 
             <div className="w-fit flex flex-col gap-4">
-            <QuestionHeader questionNumber={questionNumber} numberOfQuestions={numberOfQuestions} questionPrompt={isTrueStatement.current ? question.trueStatement : question.falseStatement} />
-                <div className="grid grid-cols-2 gap-4">
-                    {["True", "False"].map((answer, i) => (
-                        <button key={i} onClick={() => setSelectedIndex(i)} className={`rounded-xl p-4  font-medium text-lg border border-qm-500 ${selectedIdx !== i && "bg-qm-200 text-qm-700"} ${selectedIdx === i && "bg-qm-700 border-qm-700 text-qm-200"}`}>{answer}</button>
-                    ))}
-                </div>
+                <QuestionHeader questionNumber={questionNumber} numberOfQuestions={numberOfQuestions} questionPrompt={isTrueStatement.current ? question.trueStatement : question.falseStatement} />
+                <OptionSelector options={options} selectedOption={selectedOption} setSelectedOption={setSelectedOption}  />
             </div>
-            <Button text="Submit" variant="primary" onClick={() => selectedIdx !== -1 && onSubmit(selectedIdx === (isTrueStatement.current ? 0 : 1))} />
+            <Button text="Submit" variant="secondary" onClick={() => selectedOption && onSubmit(selectedOption.id === (isTrueStatement.current ? 0 : 1))} />
         </div>
     )
 }

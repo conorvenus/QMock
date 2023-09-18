@@ -4,7 +4,7 @@ export default function Button({
     onClick
 }: {
     text: string,
-    variant: "primary" | "secondary",
+    variant: "primary" | "secondary" | "option",
     onClick: () => any
 }) {
     return (

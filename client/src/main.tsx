@@ -4,12 +4,14 @@ import './index.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar.tsx'
 import NotFound from './routes/NotFound.tsx'
+import Register from './routes/Register.tsx'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
         <Navbar />
         <Routes>
             <Route path="/" element={<App />} />
+            <Route path="/register" element={<Register />} />
             <Route path="*" element={<NotFound />} />
         </Routes>
     </BrowserRouter>

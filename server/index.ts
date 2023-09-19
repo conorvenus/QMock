@@ -2,19 +2,60 @@ import { OpenAIChatApi } from "llm-api"
 import { completion } from "zod-gpt"
 import z from "zod"
 import express from 'express'
+import { PrismaClient } from "@prisma/client"
+import jwt from 'jsonwebtoken'
+import bcrypt from 'bcrypt'
 
 import { ExtendedTopicSchema, ExtendedTopic, TopicSchema, Topic } from "../shared/validators/TopicValidator"
 import { TrueFalseSchema, TrueFalseQuestion } from "../shared/validators/questions/TrueFalseValidator"
 import { MultipleChoiceSchema, MultipleChoiceQuestion } from "../shared/validators/questions/MultipleChoiceValidator"
 import { MatchingPairsSchema, MatchingPairsQuestion } from "../shared/validators/questions/MatchingPairsValidator"
 import { Text, TextSchema } from "../shared/validators/TextValidator"
+import { QuestionType, QuestionEnum } from "../shared/validators/QuestionTypeValidator"
 
 import dotenv from 'dotenv'
-import { QuestionType, QuestionEnum } from "../shared/validators/QuestionTypeValidator"
 dotenv.config()
 
 const app = express()
 app.use(express.json())
+
+const prisma = new PrismaClient()
+
+app.post('/api/login', async (req, res) => {
+    try {
+        const userParam = z.object({
+            username: z.string().min(3).max(20),
+            password: z.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/),
+        }).parse(req.body)
+        const existingUser = await prisma.user.findUnique({ where: { username: userParam.username } })
+        if (!existingUser) return res.status(400).json({ error: "Username or password incorrect" })
+        if (!await bcrypt.compare(userParam.password, existingUser.password as string)) return res.status(400).json({ error: "Username or password incorrect" })
+        const token = jwt.sign({ username: existingUser.username, id: existingUser.id }, process.env.JWT_SECRET as string, { expiresIn: '7d' })
+        return res.status(200).json({ token })
+    } catch (error) {
+        res.status(500).json({ error: (error as Error).message })
+    }
+})
+
+app.post('/api/register', async (req, res) => {
+    try {
+        const userParam = z.object({
+            username: z.string().min(3).max(20),
+            password: z.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/),
+        }).parse(req.body)
+        const existingUser = await prisma.user.findUnique({ where: { username: userParam.username } })
+        if (existingUser) return res.status(400).json({ error: "Username already exists" })
+        const hashedPassword = await bcrypt.hash(userParam.password, 10)
+        const user = await prisma.user.create({ data: { username: userParam.username, password: hashedPassword } })
+        const token = jwt.sign({ username: user.username, id: user.id }, process.env.JWT_SECRET as string, { expiresIn: '7d' })
+        return res.status(200).json({ token })
+    } catch (error) {
+        if (error instanceof z.ZodError) {
+            return res.status(400).json({ error: error.message })
+        }
+        res.status(500).json({ error: (error as Error).message })
+    }
+})
 
 app.post('/api/topics', async (req, res) => {
     try {

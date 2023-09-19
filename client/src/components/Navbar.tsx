@@ -1,11 +1,13 @@
-import { HomeIcon, LogIn, UserPlus2 } from "lucide-react"
+import { HomeIcon, LogIn, LogOut, UserPlus2 } from "lucide-react"
 import { Link } from "react-router-dom"
+import { useIsAuthenticated } from "react-auth-kit"
 
 export default function Navbar() {
+    const isAuthenticated = useIsAuthenticated()
+
     return (
         <header className="bg-qm-700 flex items-center justify-between px-8">
             <div>
-
                 <img className="h-20" src="https://qmplus.qmul.ac.uk/pluginfile.php/1/theme_catawesome/logo/1694614189/qm-logo-white.svg" alt="QM Logo" />
             </div>
             <nav>
@@ -16,18 +18,27 @@ export default function Navbar() {
                             <span className="hidden sm:block">Home</span>
                         </Link>
                     </li>
+                    {!isAuthenticated() ?
+                    <>                    
+                        <li>
+                            <Link to="/login" className="flex gap-3 items-center">
+                                <LogIn />
+                                <span className="hidden sm:block">Login</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/register" className="flex gap-3 items-center">
+                                <UserPlus2 />
+                            <span className="hidden sm:block">Register</span> 
+                            </Link>
+                        </li>
+                    </> : 
                     <li>
-                        <Link to="/login" className="flex gap-3 items-center">
-                            <LogIn />
-                            <span className="hidden sm:block">Login</span>
+                        <Link to="/logout" className="flex gap-3 items-center">
+                            <LogOut />
+                            <span className="hidden sm:block">Logout</span>
                         </Link>
-                    </li>
-                    <li>
-                        <Link to="/register" className="flex gap-3 items-center">
-                            <UserPlus2 />
-                           <span className="hidden sm:block">Register</span> 
-                        </Link>
-                    </li>
+                    </li>}
                 </ul>
             </nav>
         </header>

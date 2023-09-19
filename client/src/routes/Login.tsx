@@ -1,7 +1,30 @@
 import Form from "@/components/Form";
-import { Link } from "react-router-dom";
+import { Form as FormType } from "@/components/Form";
+import { Link, useNavigate } from "react-router-dom";
+import { useSignIn } from "react-auth-kit";
 
 export default function Login() {
+    const signIn = useSignIn()
+    const navigate = useNavigate()
+
+    async function handleSubmit(form: FormType) {
+        const response = await fetch("/api/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username: form.username.value ?? "",
+                password: form.password.value ?? ""
+            })
+        })
+        const data = await response.json()
+        if (response.ok) {
+            signIn({ token: data.token, expiresIn: 1000, tokenType: 'Bearer' })
+            navigate('/')
+        }
+    }
+
     return (
         <>
             <div className="h-full inset-0 -z-10 fixed">
@@ -12,7 +35,7 @@ export default function Login() {
                     <Form initialForm={{
                         username: { type: "text" },
                         password: { type: "password" }
-                    }} buttonText="Login" />
+                    }} buttonText="Login" handleSubmit={handleSubmit} />
                     <p className="text-slate-200">Don't yet have an account? <Link className="font-bold text-white" to="/register">Register</Link></p>
                 </div>
             </div>

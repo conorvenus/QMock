@@ -1,7 +1,6 @@
 import TrueFalse from "./components/questions/TrueFalse"
 import MultipleChoice from "./components/questions/MultipleChoice"
 import MatchingPairs from "./components/questions/MatchingPairs"
-import Navbar from "./components/Navbar"
 import Button from "./components/Button"
 import { useState } from "react"
 import { fetchEventSource } from "@microsoft/fetch-event-source"

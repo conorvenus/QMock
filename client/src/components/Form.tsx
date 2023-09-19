@@ -3,7 +3,7 @@ import { useState } from "react";
 
 export type FormInput = {
     value?: string,
-    type: "text" | "password" | "button"
+    type: "text" | "password" | "email"
 }
 
 export type Form = {

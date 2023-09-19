@@ -1,4 +1,4 @@
-import { HomeIcon, UserPlus2 } from "lucide-react"
+import { HomeIcon, LogIn, UserPlus2 } from "lucide-react"
 import { Link } from "react-router-dom"
 
 export default function Navbar() {
@@ -14,6 +14,12 @@ export default function Navbar() {
                         <Link to="/" className="flex gap-3 items-center">
                             <HomeIcon />
                             Home
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/login" className="flex gap-3 items-center">
+                            <LogIn />
+                            Login
                         </Link>
                     </li>
                     <li>

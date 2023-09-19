@@ -9,23 +9,23 @@ export default function Navbar() {
                 <img className="h-20" src="https://qmplus.qmul.ac.uk/pluginfile.php/1/theme_catawesome/logo/1694614189/qm-logo-white.svg" alt="QM Logo" />
             </div>
             <nav>
-                <ul className="text-white font-medium text-lg flex gap-16">
+                <ul className="text-white font-medium text-lg flex gap-8 sm:gap-16">
                     <li>
                         <Link to="/" className="flex gap-3 items-center">
                             <HomeIcon />
-                            Home
+                            <span className="hidden sm:block">Home</span>
                         </Link>
                     </li>
                     <li>
                         <Link to="/login" className="flex gap-3 items-center">
                             <LogIn />
-                            Login
+                            <span className="hidden sm:block">Login</span>
                         </Link>
                     </li>
                     <li>
                         <Link to="/register" className="flex gap-3 items-center">
                             <UserPlus2 />
-                            Register
+                           <span className="hidden sm:block">Register</span> 
                         </Link>
                     </li>
                 </ul>

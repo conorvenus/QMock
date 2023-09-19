@@ -36,7 +36,6 @@ function App() {
 
     return (
         <>
-            <Navbar />
             <div className="bg-white rounded-lg p-8 mx-auto w-fit mt-8 shadow-lg">
                 <div className="flex flex-row gap-4 m-8 mt-0 pt-8 justify-center">
                     <Button variant="secondary" text="Get Questions" onClick={() => getQuestionsByTopic({ topic: "Test Topic", summary: "test topic", quantity: 1, type: "true/false" })} />

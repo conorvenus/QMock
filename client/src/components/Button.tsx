@@ -1,11 +1,11 @@
 export default function Button({
     text,
-    variant = "primary",
-    onClick
+    onClick,
+    variant = "primary"
 }: {
     text: string,
     variant: "primary" | "secondary" | "option" | "selected option",
-    onClick: () => any
+    onClick?: () => any
 }) {
     return (
         <button 

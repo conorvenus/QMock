@@ -73,7 +73,7 @@ export default function MatchingPairs({ question, questionNumber, numberOfQuesti
     }
 
     return (
-        <div className="w-fit flex flex-col gap-4">
+        <div className="flex flex-col gap-4 w-full">
             <QuestionHeader questionNumber={questionNumber} numberOfQuestions={numberOfQuestions} questionPrompt={question.prompt} />
 
             <div className="grid grid-cols-2 gap-4">

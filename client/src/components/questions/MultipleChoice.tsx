@@ -18,7 +18,7 @@ export default function MultipleChoice({ question, questionNumber, numberOfQuest
     const [selectedOption, setSelectedOption] = useState<Option | null>(null);
 
     return (
-        <div className="flex flex-col items-center gap-4">
+        <div className="flex flex-col items-center gap-4 w-full">
             <div className="w-fit flex flex-col gap-4">
                 <QuestionHeader questionNumber={questionNumber} numberOfQuestions={numberOfQuestions} questionPrompt={question.question}/>
                 <OptionSelector options={options} selectedOption={selectedOption} setSelectedOption={setSelectedOption}  />
